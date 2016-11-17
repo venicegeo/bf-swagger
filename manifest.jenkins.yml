@@ -1,0 +1,11 @@
+applications:
+- name: bf-swagger
+  host: bf-swagger
+  buildpack: staticfile_buildpack
+  domain: stage.geointservices.io
+  memory: 256M
+  disk_quota: 128M
+  instances: 1
+  timeout: 180
+  env:
+    FORCE_HTTPS: true
