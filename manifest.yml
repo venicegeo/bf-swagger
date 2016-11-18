@@ -1,0 +1,4 @@
+applications:
+- name: bf-swagger-${GIT_REVISION}
+  host: bf-swagger-${GIT_REVISION}
+  buildpack: staticfile_buildpack

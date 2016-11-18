@@ -1,0 +1,595 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Beachfront Core Services API",
+    "version": "0.1.0",
+    "title": "Beachfront API",
+    "contact": {
+      "name": "The VeniceGeo Project",
+      "url": "http://radiantblue.com",
+      "email": "venice@radiantblue.com"
+    }
+  },
+  "host": "localhost:8081",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "data-controller",
+      "description": "Data Controller"
+    },
+    {
+      "name": "event-controller",
+      "description": "Event Controller"
+    },
+    {
+      "name": "service-controller",
+      "description": "Service Controller"
+    },
+    {
+      "name": "deployment-controller",
+      "description": "Deployment Controller"
+    },
+    {
+      "name": "job-controller",
+      "description": "Job Controller"
+    },
+    {
+      "name": "alert-trigger-controller",
+      "description": "Alert Trigger Controller"
+    }
+  ],
+  "paths": {
+    "/v0/services": {
+      "get": {
+        "tags": [
+          "Services"
+        ],
+        "summary": "Get Supporting Services",
+        "description": "Gets all of the Services",
+        "operationId": "getServicesUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of Services.",
+            "schema": {
+
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v0/algorithm": {
+      "get": {
+        "tags": [
+          "Algorithm"
+        ],
+        "summary": "Get Algorithms",
+        "description": "Gets all of the Algorithms",
+        "operationId": "getAlgorithmsUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of Algorithm.",
+            "schema": {
+
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v0/algorithm/{serviceId}": {
+      "get": {
+        "tags": [
+          "Algorithm"
+        ],
+        "summary": "Get Algorithm by ServiceId",
+        "description": "Gets the Algorithm by Service Id",
+        "operationId": "getAlgorithmViaServiceIdUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "The Algorithm for a specific Service",
+            "schema": {
+
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v0/job": {
+      "get": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Get Jobs",
+        "description": "Gets all of the Jobs",
+        "operationId": "getJobsUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of Jobs",
+            "schema": {
+
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Create Job",
+        "description": "Create a Job",
+        "operationId": "postJobUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "The created Job",
+            "schema": {
+
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }      
+    },
+    "/v0/job/{jobId}": {
+      "get": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Get Job by JobId",
+        "description": "Gets the Job by Job Id",
+        "operationId": "getJobViaJobIdUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "The Job specified by the Job Id",
+            "schema": {
+
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Delete Job by JobId",
+        "description": "Deletes the Job by Job Id",
+        "operationId": "deleteJobViaJobIdUsingDELETE",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "The Job specified by the Job Id",
+            "schema": {
+
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }      
+    },
+    "/v0/job/by_scene/{sceneId}": {
+      "get": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Get Jobs by SceneId",
+        "description": "Gets the Jobs by Scene Id",
+        "operationId": "getJobsViaSceneIdUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of Jobs for a specific Scene",
+            "schema": {
+
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v0/job/by_productline/{productlineId}": {
+      "get": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Get Jobs by ProductLineId",
+        "description": "Gets the Jobs by ProductLine Id",
+        "operationId": "getJobsViaProductlineIdUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of Jobs for a specific ProductLine",
+            "schema": {
+
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v0/productline": {
+      "get": {
+        "tags": [
+          "Product Line"
+        ],
+        "summary": "Get Product Lines",
+        "description": "Gets all of the Product Lines",
+        "operationId": "getProductLinesUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of Product Lines",
+            "schema": {
+
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Product Line"
+        ],
+        "summary": "Create Product Line",
+        "description": "Creates a Product Line",
+        "operationId": "postProductLineUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of Product Lines",
+            "schema": {
+
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }      
+    },
+    "/v0/scene/event/harvest": {
+      "post": {
+        "tags": [
+          "Scene"
+        ],
+        "summary": "Process a Harvest Event",
+        "description": "Process a Harvest Event",
+        "operationId": "processHarvestEventUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Job associated with specified Product Line",
+            "schema": {
+
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }     
+  },
+  "definitions": {
+    "TextDataType": {
+      "type": "object",
+      "required": [
+        "content"
+      ],
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "The text content of the Data"
+        },
+        "mimeType": {
+          "type": "string",
+          "description": "The media type of the stored Data.  Refer to http://www.iana.org for standard values"
+        }
+      }
+    }
+  }
+}
