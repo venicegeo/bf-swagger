@@ -2,19 +2,15 @@
   "name": "swagger-ui",
   "author": "Tony Tam <fehguy@gmail.com>",
   "contributors": [
-    {
-      "name": "Mohsen Azimi",
-      "email": "me@azimi.me"
-    }
+    "Mohsen Azimi <me@azimi.me>"
   ],
   "description": "Swagger UI is a dependency-free collection of HTML, JavaScript, and CSS assets that dynamically generate beautiful documentation from a Swagger-compliant API",
-  "version": "2.2.6",
+  "version": "2.1.4",
   "homepage": "http://swagger.io",
   "license": "Apache-2.0",
   "main": "dist/swagger-ui.js",
   "scripts": {
-    "build": "npm run handlebars && gulp",
-    "handlebars": "handlebars ./src/main/template -f ./src/main/template/templates.js && gulp handlebars",
+    "build": "gulp",
     "serve": "gulp serve",
     "prejshint": "gulp",
     "jshint": "jshint .",
@@ -23,14 +19,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/swagger-api/swagger-ui.git"
+    "url": "git+https://github.com/swagger-api/swagger-ui.git"
   },
-  "readmeFilename": "README.md",
   "devDependencies": {
     "chai": "^2.1.0",
     "cors": "^2.5.3",
     "docco": "^0.7.0",
-    "es5-shim": "^4.5.9",
     "event-stream": "^3.2.2",
     "express": "^4.12.0",
     "gulp": "^3.8.11",
@@ -38,6 +32,7 @@
     "gulp-concat": "^2.5.2",
     "gulp-connect": "^2.2.0",
     "gulp-declare": "^0.3.0",
+    "gulp-handlebars": "^3.0.1",
     "gulp-header": "^1.2.2",
     "gulp-jshint": "^1.10.0",
     "gulp-less": "^3.0.1",
@@ -46,20 +41,43 @@
     "gulp-uglify": "^1.1.0",
     "gulp-watch": "^4.1.1",
     "gulp-wrap": "^0.11.0",
-    "handlebars": "^4.0.5",
     "http-server": "^0.8.0",
     "jshint-stylish": "^1.0.1",
-    "karma": "0.13.19",
-    "karma-chai": "0.1.0",
-    "karma-chrome-launcher": "0.2.2",
-    "karma-mocha": "0.2.1",
-    "karma-phantomjs-launcher": "0.2.3",
-    "karma-sinon-chai": "1.1.0",
     "less": "^2.4.0",
     "mocha": "^2.1.0",
-    "phantomjs": "1.9.19",
     "selenium-webdriver": "^2.45.0",
-    "sinon-chai": "2.8.0",
-    "swagger-client": "2.1.23"
+    "swagger-client": "2.1.11"
+  },
+  "bugs": {
+    "url": "https://github.com/swagger-api/swagger-ui/issues"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai": "^2.3.0",
+    "cors": "^2.7.1",
+    "docco": "^0.7.0",
+    "event-stream": "^3.3.2",
+    "gulp": "^3.9.1",
+    "express": "^4.13.4",
+    "gulp-clean": "^0.3.2",
+    "gulp-connect": "^2.3.1",
+    "gulp-handlebars": "^3.0.1",
+    "gulp-header": "^1.8.2",
+    "gulp-declare": "^0.3.0",
+    "gulp-jshint": "^1.12.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-order": "^1.1.1",
+    "gulp-less": "^3.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.3",
+    "gulp-watch": "^4.3.5",
+    "gulp-wrap": "^0.11.0",
+    "http-server": "^0.8.5",
+    "jshint-stylish": "^1.0.2",
+    "less": "^2.7.1",
+    "selenium-webdriver": "^2.53.2",
+    "swagger-client": "^2.1.11"
   }
 }

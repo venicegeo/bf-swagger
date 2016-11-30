@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APP=bf-swagger
+APP=pz-swagger
 EXT=bin
 SHA=$(git rev-parse HEAD)
 SHORT=$(git rev-parse --short HEAD)

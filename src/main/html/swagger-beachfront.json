@@ -53,14 +53,12 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "The list of Services.",
             "schema": {
-
+              "$ref": "#/definitions/ServiceResults"
             }
           },
           "400": {
@@ -98,14 +96,12 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "The list of Algorithm.",
+            "description": "The list of Algorithms",
             "schema": {
-
+              "$ref": "#/definitions/AlgorithmResults"
             }
           },
           "400": {
@@ -143,14 +139,12 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "The Algorithm for a specific Service",
             "schema": {
-
+              "$ref": "#/definitions/Algorithm"
             }
           },
           "400": {
@@ -188,15 +182,11 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "The list of Jobs",
-            "schema": {
-
-            }
+            "schema": {}
           },
           "400": {
             "description": "Bad Request",
@@ -231,15 +221,11 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "The created Job",
-            "schema": {
-
-            }
+            "schema": {}
           },
           "400": {
             "description": "Bad Request",
@@ -260,7 +246,7 @@
             }
           }
         }
-      }      
+      }
     },
     "/v0/job/{jobId}": {
       "get": {
@@ -276,15 +262,11 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "The Job specified by the Job Id",
-            "schema": {
-
-            }
+            "schema": {}
           },
           "400": {
             "description": "Bad Request",
@@ -319,15 +301,11 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "The Job specified by the Job Id",
-            "schema": {
-
-            }
+            "schema": {}
           },
           "400": {
             "description": "Bad Request",
@@ -348,7 +326,7 @@
             }
           }
         }
-      }      
+      }
     },
     "/v0/job/by_scene/{sceneId}": {
       "get": {
@@ -364,15 +342,11 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "The list of Jobs for a specific Scene",
-            "schema": {
-
-            }
+            "schema": {}
           },
           "400": {
             "description": "Bad Request",
@@ -409,15 +383,11 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "The list of Jobs for a specific ProductLine",
-            "schema": {
-
-            }
+            "schema": {}
           },
           "400": {
             "description": "Bad Request",
@@ -454,15 +424,11 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "The list of Product Lines",
-            "schema": {
-
-            }
+            "schema": {}
           },
           "400": {
             "description": "Bad Request",
@@ -497,60 +463,11 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "The list of Product Lines",
-            "schema": {
-
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }      
-    },
-    "/v0/scene/event/harvest": {
-      "post": {
-        "tags": [
-          "Scene"
-        ],
-        "summary": "Process a Harvest Event",
-        "description": "Process a Harvest Event",
-        "operationId": "processHarvestEventUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-
-        ],
-        "responses": {
-          "200": {
-            "description": "Job associated with specified Product Line",
-            "schema": {
-
-            }
+            "schema": {}
           },
           "400": {
             "description": "Bad Request",
@@ -572,7 +489,48 @@
           }
         }
       }
-    }     
+    },
+    "/v0/scene/event/harvest": {
+      "post": {
+        "tags": [
+          "Scene"
+        ],
+        "summary": "Process a Harvest Event",
+        "description": "Process a Harvest Event",
+        "operationId": "processHarvestEventUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Job associated with specified Product Line",
+            "schema": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
   },
   "definitions": {
     "TextDataType": {
@@ -588,6 +546,264 @@
         "mimeType": {
           "type": "string",
           "description": "The media type of the stored Data.  Refer to http://www.iana.org for standard values"
+        }
+      }
+    },
+    "ServiceResults": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "The array of Service results",
+          "items": {
+            "$ref": "#/definitions/Service"
+          }
+        }
+      }
+    },
+    "Service": {
+      "type": "object",
+      "required": [
+        "serviceId",
+        "description",
+        "metadata",
+        "name",
+        "url"
+      ],
+      "properties": {
+        "serviceId": {
+          "type": "string",
+          "description": "Provided by the System. The unique Id of the Service"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the resource"
+        },
+        "metadata": {
+          "description": "Object of common metadata fields used to describe Data or Services within the Piazza system",
+          "$ref": "#/definitions/Metadata"
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the resourece"
+        },
+        "url": {
+          "type": "string",
+          "description": "The URL to the user Service to be executed"
+        }
+      }
+    },
+    "SecurityClassification": {
+      "type": "object",
+      "required": [
+        "classification"
+      ],
+      "properties": {
+        "classification": {
+          "type": "string",
+          "description": "The security classification marking for the Data"
+        }
+      }
+    },
+    "NumericKeyValue": {
+      "type": "object",
+      "required": [
+        "key",
+        "value"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The pair key"
+        },
+        "value": {
+          "type": "number",
+          "format": "double",
+          "description": "The value for the key"
+        }
+      }
+    },
+    "TextKeyValue": {
+      "type": "object",
+      "required": [
+        "key",
+        "value"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The pair key"
+        },
+        "value": {
+          "type": "string",
+          "description": "The value for the key"
+        }
+      }
+    },
+    "Metadata": {
+      "type": "object",
+      "required": [
+        "classType"
+      ],
+      "properties": {
+        "availability": {
+          "type": "string",
+          "description": "Describes the status of the resource(ONLINE, FAILED (The resoure has failed), DEGRADED (The resource is not performing well), OFFLINE (the resource has been turned off)",
+          "enum": [
+            "status_type"
+          ]
+        },
+        "classType": {
+          "description": "Classification of the resource",
+          "$ref": "#/definitions/SecurityClassification"
+        },
+        "clientCertRequired": {
+          "type": "boolean",
+          "example": false,
+          "description": "Indication on whether a client certificate required to access thie resource.  Could be a user certificate or computer certificate"
+        },
+        "contacts": {
+          "type": "string",
+          "description": "Name, e-mail and phone number of point of contact (String concatenated together)"
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "Username of the individual submitting the resource"
+        },
+        "createdByJobId": {
+          "type": "string",
+          "description": "Provided by the system. If available, the Id of the Job that resulted in the creation of this resource."
+        },
+        "createdOn": {
+          "type": "string",
+          "description": "The date and time of data submission to Piazza"
+        },
+        "credentialsRequired": {
+          "type": "boolean",
+          "example": false,
+          "description": "Indication on whether credentials are required to access this resource"
+        },
+        "format": {
+          "type": "string",
+          "description": "In case of ComplexData, Format defines the allowed input representation"
+        },
+        "metadata": {
+          "type": "object",
+          "description": "A generic Map of String:String (key:value) pairs with additional metadata",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "networkAvailable": {
+          "type": "string",
+          "description": "A list of networks names where this resource is available"
+        },
+        "numericKeyValueList": {
+          "type": "array",
+          "description": "Allows for the optional specification of user-defined key-value pairs of numeric values",
+          "items": {
+            "$ref": "#/definitions/NumericKeyValue"
+          }
+        },
+        "preAuthRequired": {
+          "type": "boolean",
+          "example": false,
+          "description": "Indication on whether preauthorization is required before using the resource?  (e.g. do users need to sign a user agreement, etc.)"
+        },
+        "qos": {
+          "type": "string",
+          "description": "Quality level of the resource (Production, Development)"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Human readable reason on the status of the resource"
+        },
+        "statusType": {
+          "type": "string",
+          "description": "Status of the resource",
+          "enum": [
+            "ONLINE",
+            "OFFLINE",
+            "DEGRADED",
+            "FAILED"
+          ]
+        },
+        "tags": {
+          "type": "string",
+          "description": "Keywords describing the resource"
+        },
+        "textKeyValueList": {
+          "type": "array",
+          "description": "Allows for the optional specification ofu ser-defined key-value pairs for string values",
+          "items": {
+            "$ref": "#/definitions/TextKeyValue"
+          }
+        },
+        "version": {
+          "type": "string",
+          "description": "The current version of the resource"
+        }
+      }
+    },
+    "Algorithm": {
+      "type": "object",
+      "required": [
+        "serviceId",
+        "url",
+        "name",
+        "version"
+      ],
+      "properties": {
+        "bands": {
+          "type": "string",
+          "description": "band description"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the resource"
+        },
+        "interface": {
+          "type": "string",
+          "description": "interface description"
+        },
+        "maxCloudCover": {
+          "type": "number",
+          "format": "integer",
+          "description": "maxCloudCover description"
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable description of the algorithm"
+        },
+        "serviceId": {
+          "type": "string",
+          "description": "Provided by the System. The unique Id of the Service"
+        },
+        "url": {
+          "type": "string",
+          "description": "The URL to the user Service to be executed"
+        },
+        "version": {
+          "type": "string",
+          "description": "The current version of the resource"
+        }
+      }
+    },
+    "AlgorithmResults": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "The array of Service results",
+          "items": {
+            "$ref": "#/definitions/Algorithm"
+          }
         }
       }
     }
