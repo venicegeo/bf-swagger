@@ -1,4 +1,4 @@
 #!/bin/bash
 
-APP=pz-swagger
+APP=bf-swagger
 EXT=tar.gz
