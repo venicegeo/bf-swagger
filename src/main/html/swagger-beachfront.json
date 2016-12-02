@@ -42,7 +42,7 @@
     "/v0/services": {
       "get": {
         "tags": [
-          "Services"
+          "Service"
         ],
         "summary": "Get Supporting Services",
         "description": "Gets all of the Services",
@@ -144,7 +144,7 @@
           "200": {
             "description": "The Algorithm for a specific Service",
             "schema": {
-              "$ref": "#/definitions/Algorithm"
+              "$ref": "#/definitions/AlgorithmResult"
             }
           },
           "400": {
@@ -186,7 +186,9 @@
         "responses": {
           "200": {
             "description": "The list of Jobs",
-            "schema": {}
+            "schema": {
+              "$ref": "#/definitions/JobResults"
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -221,11 +223,23 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "job",
+            "description": "The description",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateJob"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "The created Job",
-            "schema": {}
+            "schema": {
+              "$ref": "#/definitions/Job"
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -266,7 +280,9 @@
         "responses": {
           "200": {
             "description": "The Job specified by the Job Id",
-            "schema": {}
+            "schema": {
+              "$ref": "#/definitions/Job"
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -346,7 +362,9 @@
         "responses": {
           "200": {
             "description": "The list of Jobs for a specific Scene",
-            "schema": {}
+            "schema": {
+              "$ref": "#/definitions/JobResults"
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -387,7 +405,9 @@
         "responses": {
           "200": {
             "description": "The list of Jobs for a specific ProductLine",
-            "schema": {}
+            "schema": {
+              "$ref": "#/definitions/JobResults"
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -428,7 +448,9 @@
         "responses": {
           "200": {
             "description": "The list of Product Lines",
-            "schema": {}
+            "schema": {
+              "$ref": "#/definitions/ProductLineResults"
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -463,11 +485,23 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "productline",
+            "description": "The description",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductLine"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "The list of Product Lines",
-            "schema": {}
+            "description": "The created Product Line",
+            "schema": {
+              "$ref": "#/definitions/ProductLine"
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -758,8 +792,11 @@
       ],
       "properties": {
         "bands": {
-          "type": "string",
-          "description": "band description"
+          "type": "array",
+          "description": "band description",
+          "items": {
+            "type": "string"
+          }
         },
         "description": {
           "type": "string",
@@ -769,16 +806,16 @@
           "type": "string",
           "description": "interface description"
         },
-        "maxCloudCover": {
+        "max_cloud_cover": {
           "type": "number",
           "format": "integer",
-          "description": "maxCloudCover description"
+          "description": "max_cloud_cover description"
         },
         "name": {
           "type": "string",
           "description": "Human-readable description of the algorithm"
         },
-        "serviceId": {
+        "service_id": {
           "type": "string",
           "description": "Provided by the System. The unique Id of the Service"
         },
@@ -795,15 +832,326 @@
     "AlgorithmResults": {
       "type": "object",
       "required": [
-        "data"
+        "algorithms"
       ],
       "properties": {
-        "data": {
+        "algorithms": {
           "type": "array",
-          "description": "The array of Service results",
+          "description": "The array of Algorithm results",
           "items": {
             "$ref": "#/definitions/Algorithm"
           }
+        }
+      }
+    },
+    "AlgorithmResult": {
+      "type": "object",
+      "required": [
+        "algorithm"
+      ],
+      "properties": {
+        "algorithm": {
+          "$ref": "#/definitions/Algorithm",
+          "description": "The Algorithm result"
+        }
+      }
+    },
+    "Scene": {},
+    "ProductLineResults": {
+      "type": "object",
+      "required": [
+        "product_lines"
+      ],
+      "properties": {
+        "product_lines": {
+          "type": "array",
+          "description": "The array of Product Line results",
+          "items": {
+            "$ref": "#/definitions/ProductLineType"
+          }
+        }
+      }
+    },
+    "ProductLineProperties": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "algorithm_name": {
+          "type": "string",
+          "description": "Human-readable name of the Algorithm"
+        },
+        "category": {
+          "type": "string",
+          "description": "The category"
+        },
+        "created_by": {
+          "type": "string",
+          "description": "The username of the user that created the Product Line"
+        },
+        "created_on": {
+          "type": "string",
+          "description": "The date and time this Product Line was created"
+        },
+        "max_cloud_cover": {
+          "type": "number",
+          "format": "integer",
+          "description": "Integer representing the maximum cloud cover"
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the Product Line"
+        },
+        "owned_by": {
+          "type": "string",
+          "description": "The owner of the Product Line"
+        },
+        "spatial_filter_id": {
+          "type": "string",
+          "description": "The unique Id of the Spatial Filter"
+        },
+        "start_on": {
+          "type": "string",
+          "description": "The date and time of when this Product Line started"
+        },
+        "stop_on": {
+          "type": "string",
+          "description": "The date and time of when this Product Line stopped"
+        },
+        "type": {
+          "type": "string",
+          "description": "Product Line type"
+        }
+      }
+    },
+    "Job": {
+      "type": "object",
+      "required": [
+        "id",
+        "properties",
+        "type",
+        "geometry"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The owner of the Product Line"
+        },
+        "properties": {
+          "type": "object",
+          "description": "The unique Id of the Spatial Filter",
+          "$ref": "#/definitions/JobProperties"
+        },
+        "type": {
+          "type": "string",
+          "description": "The date and time of when this Product Line started"
+        },
+        "geometry": {
+          "type": "object",
+          "description": "The date and time of when this Product Line stopped",
+          "$ref": "#/definitions/Geometry"
+        }
+      }
+    },
+    "ProductLine": {
+      "type": "object",
+      "required": [
+        "id",
+        "properties",
+        "type",
+        "geometry"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The owner of the Product Line"
+        },
+        "properties": {
+          "type": "object",
+          "description": "The unique Id of the Spatial Filter",
+          "$ref": "#/definitions/ProductLineProperties"
+        },
+        "type": {
+          "type": "string",
+          "description": "The date and time of when this Product Line started"
+        },
+        "geometry": {
+          "type": "object",
+          "description": "The date and time of when this Product Line stopped",
+          "$ref": "#/definitions/Geometry"
+        }
+      }
+    },
+    "Geometry": {
+      "type": "object",
+      "required": [
+        "coordinates",
+        "type"
+      ],
+      "properties": {
+        "coordinates": {
+          "type": "array",
+          "description": "The unique Id of the Spatial Filter",
+          "items": {
+            "type": "array",
+            "description": "test",
+            "items": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        },
+        "type": {
+          "type": "string",
+          "description": "The date and time of when this Product Line started"
+        }
+      }
+    },
+    "JobProperties": {
+      "type": "object",
+      "required": [
+        "scene_id",
+        "name"
+      ],
+      "properties": {
+        "algorithm_name": {
+          "type": "string",
+          "description": "Provided by the System. The unique Id of the Product Line"
+        },
+        "algorithm_version": {
+          "type": "string",
+          "description": "Human-readable name of the Algorithm"
+        },
+        "geometry": {
+          "type": "string",
+          "description": "The bounding box geometry tuple"
+        },
+        "created_by": {
+          "type": "string",
+          "description": "The username of the user that created the Product Line"
+        },
+        "created_on": {
+          "type": "string",
+          "description": "The date and time this Product Line was created"
+        },
+        "scene_capture_date": {
+          "type": "number",
+          "format": "integer",
+          "description": "Integer representing the maximum cloud cover"
+        },
+        "scene_sensor_name": {
+          "type": "string",
+          "description": "sensor name"
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the Product Line"
+        },
+        "scene_id": {
+          "type": "string",
+          "description": "The owner of the Product Line"
+        },
+        "status": {
+          "type": "string",
+          "description": "The unique Id of the Spatial Filter"
+        },
+        "tide": {
+          "type": "string",
+          "description": "The date and time of when this Product Line started"
+        },
+        "tide_min_24h": {
+          "type": "string",
+          "description": "The date and time of when this Product Line stopped"
+        },
+        "tide_max_24h": {
+          "type": "string",
+          "description": "max tide"
+        }
+      }
+    },
+    "JobResults": {
+      "type": "object",
+      "required": [
+        "jobs"
+      ],
+      "properties": {
+        "jobs": {
+          "type": "object",
+          "description": "The array of Job results",
+          "$ref": "#/definitions/JobType"
+        }
+      }
+    },
+    "JobType": {
+      "type": "object",
+      "required": [
+        "features",
+        "type"
+      ],
+      "properties": {
+        "features": {
+          "type": "array",
+          "description": "The array of Job results",
+          "items": {
+            "$ref": "#/definitions/Job"
+          }
+        },
+        "type": {
+          "type": "string",
+          "description": "Job Type"
+        }
+      }
+    },
+    "ProductLineType": {
+      "type": "object",
+      "required": [
+        "features",
+        "type"
+      ],
+      "properties": {
+        "features": {
+          "type": "array",
+          "description": "The array of Product Line results",
+          "items": {
+            "$ref": "#/definitions/ProductLine"
+          }
+        },
+        "type": {
+          "type": "string",
+          "description": "Product Line Type"
+        }
+      }
+    },
+    "CreateJob": {
+      "type": "object",
+      "required": [
+        "apiKey",
+        "userId",
+        "sceneId",
+        "serviceId",
+        "jobName"
+      ],
+      "properties": {
+        "apiKey": {
+          "type": "string",
+          "description": ""
+        },
+        "userId": {
+          "type": "string",
+          "description": ""
+        },
+        "sceneId": {
+          "type": "string",
+          "description": ""
+        },
+        "serviceId": {
+          "type": "string",
+          "description": ""
+        },
+        "jobName": {
+          "type": "string",
+          "description": ""
         }
       }
     }
