@@ -1,1159 +1,968 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "description": "Beachfront Core Services API",
-    "version": "0.1.0",
-    "title": "Beachfront API",
-    "contact": {
-      "name": "The VeniceGeo Project",
-      "url": "http://radiantblue.com",
-      "email": "venice@radiantblue.com"
-    }
-  },
-  "host": "localhost:8081",
-  "basePath": "/",
-  "tags": [
-    {
-      "name": "data-controller",
-      "description": "Data Controller"
+    "swagger": "2.0",
+    "info": {
+        "title": "Beachfront",
+        "description": "Beachfront Core Services API",
+        "version": "v0"
     },
-    {
-      "name": "event-controller",
-      "description": "Event Controller"
-    },
-    {
-      "name": "service-controller",
-      "description": "Service Controller"
-    },
-    {
-      "name": "deployment-controller",
-      "description": "Deployment Controller"
-    },
-    {
-      "name": "job-controller",
-      "description": "Job Controller"
-    },
-    {
-      "name": "alert-trigger-controller",
-      "description": "Alert Trigger Controller"
-    }
-  ],
-  "paths": {
-    "/v0/services": {
-      "get": {
-        "tags": [
-          "Service"
-        ],
-        "summary": "Get Supporting Services",
-        "description": "Gets all of the Services",
-        "operationId": "getServicesUsingGET",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The list of Services.",
-            "schema": {
-              "$ref": "#/definitions/ServiceResults"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/v0/algorithm": {
-      "get": {
-        "tags": [
-          "Algorithm"
-        ],
-        "summary": "Get Algorithms",
-        "description": "Gets all of the Algorithms",
-        "operationId": "getAlgorithmsUsingGET",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The list of Algorithms",
-            "schema": {
-              "$ref": "#/definitions/AlgorithmResults"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/v0/algorithm/{serviceId}": {
-      "get": {
-        "tags": [
-          "Algorithm"
-        ],
-        "summary": "Get Algorithm by ServiceId",
-        "description": "Gets the Algorithm by Service Id",
-        "operationId": "getAlgorithmViaServiceIdUsingGET",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The Algorithm for a specific Service",
-            "schema": {
-              "$ref": "#/definitions/AlgorithmResult"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/v0/job": {
-      "get": {
-        "tags": [
-          "Job"
-        ],
-        "summary": "Get Jobs",
-        "description": "Gets all of the Jobs",
-        "operationId": "getJobsUsingGET",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The list of Jobs",
-            "schema": {
-              "$ref": "#/definitions/JobResults"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Job"
-        ],
-        "summary": "Create Job",
-        "description": "Create a Job",
-        "operationId": "postJobUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "job",
-            "description": "The description",
+    "host": "bf-api.geointservices.io",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "parameters": {
+        "AuthAPIKey": {
+            "name": "Authorization",
+            "description": "Basic authentication with the session token as the User and no password\n",
+            "in": "header",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/CreateJob"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The created Job",
-            "schema": {
-              "$ref": "#/definitions/Job"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/v0/job/{jobId}": {
-      "get": {
-        "tags": [
-          "Job"
-        ],
-        "summary": "Get Job by JobId",
-        "description": "Gets the Job by Job Id",
-        "operationId": "getJobViaJobIdUsingGET",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The Job specified by the Job Id",
-            "schema": {
-              "$ref": "#/definitions/Job"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Job"
-        ],
-        "summary": "Delete Job by JobId",
-        "description": "Deletes the Job by Job Id",
-        "operationId": "deleteJobViaJobIdUsingDELETE",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The Job specified by the Job Id",
-            "schema": {}
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/v0/job/by_scene/{sceneId}": {
-      "get": {
-        "tags": [
-          "Job"
-        ],
-        "summary": "Get Jobs by SceneId",
-        "description": "Gets the Jobs by Scene Id",
-        "operationId": "getJobsViaSceneIdUsingGET",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The list of Jobs for a specific Scene",
-            "schema": {
-              "$ref": "#/definitions/JobResults"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/v0/job/by_productline/{productlineId}": {
-      "get": {
-        "tags": [
-          "Job"
-        ],
-        "summary": "Get Jobs by ProductLineId",
-        "description": "Gets the Jobs by ProductLine Id",
-        "operationId": "getJobsViaProductlineIdUsingGET",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The list of Jobs for a specific ProductLine",
-            "schema": {
-              "$ref": "#/definitions/JobResults"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/v0/productline": {
-      "get": {
-        "tags": [
-          "Product Line"
-        ],
-        "summary": "Get Product Lines",
-        "description": "Gets all of the Product Lines",
-        "operationId": "getProductLinesUsingGET",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The list of Product Lines",
-            "schema": {
-              "$ref": "#/definitions/ProductLineResults"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Product Line"
-        ],
-        "summary": "Create Product Line",
-        "description": "Creates a Product Line",
-        "operationId": "postProductLineUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "productline",
-            "description": "The description",
+            "type": "string"
+        },
+        "AuthUsernameAndPassword": {
+            "name": "Authorization",
+            "description": "Basic authentication with username and password\n",
+            "in": "header",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/ProductLine"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The created Product Line",
-            "schema": {
-              "$ref": "#/definitions/ProductLine"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/v0/scene/event/harvest": {
-      "post": {
-        "tags": [
-          "Scene"
-        ],
-        "summary": "Process a Harvest Event",
-        "description": "Process a Harvest Event",
-        "operationId": "processHarvestEventUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Job associated with specified Product Line",
-            "schema": {}
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    }
-  },
-  "definitions": {
-    "TextDataType": {
-      "type": "object",
-      "required": [
-        "content"
-      ],
-      "properties": {
-        "content": {
-          "type": "string",
-          "description": "The text content of the Data"
-        },
-        "mimeType": {
-          "type": "string",
-          "description": "The media type of the stored Data.  Refer to http://www.iana.org for standard values"
-        }
-      }
-    },
-    "ServiceResults": {
-      "type": "object",
-      "required": [
-        "data"
-      ],
-      "properties": {
-        "data": {
-          "type": "array",
-          "description": "The array of Service results",
-          "items": {
-            "$ref": "#/definitions/Service"
-          }
-        }
-      }
-    },
-    "Service": {
-      "type": "object",
-      "required": [
-        "serviceId",
-        "description",
-        "metadata",
-        "name",
-        "url"
-      ],
-      "properties": {
-        "serviceId": {
-          "type": "string",
-          "description": "Provided by the System. The unique Id of the Service"
-        },
-        "description": {
-          "type": "string",
-          "description": "Human-readable description of the resource"
-        },
-        "metadata": {
-          "description": "Object of common metadata fields used to describe Data or Services within the Piazza system",
-          "$ref": "#/definitions/Metadata"
-        },
-        "name": {
-          "type": "string",
-          "description": "Human-readable name of the resourece"
-        },
-        "url": {
-          "type": "string",
-          "description": "The URL to the user Service to be executed"
-        }
-      }
-    },
-    "SecurityClassification": {
-      "type": "object",
-      "required": [
-        "classification"
-      ],
-      "properties": {
-        "classification": {
-          "type": "string",
-          "description": "The security classification marking for the Data"
-        }
-      }
-    },
-    "NumericKeyValue": {
-      "type": "object",
-      "required": [
-        "key",
-        "value"
-      ],
-      "properties": {
-        "key": {
-          "type": "string",
-          "description": "The pair key"
-        },
-        "value": {
-          "type": "number",
-          "format": "double",
-          "description": "The value for the key"
-        }
-      }
-    },
-    "TextKeyValue": {
-      "type": "object",
-      "required": [
-        "key",
-        "value"
-      ],
-      "properties": {
-        "key": {
-          "type": "string",
-          "description": "The pair key"
-        },
-        "value": {
-          "type": "string",
-          "description": "The value for the key"
-        }
-      }
-    },
-    "Metadata": {
-      "type": "object",
-      "required": [
-        "classType"
-      ],
-      "properties": {
-        "availability": {
-          "type": "string",
-          "description": "Describes the status of the resource(ONLINE, FAILED (The resoure has failed), DEGRADED (The resource is not performing well), OFFLINE (the resource has been turned off)",
-          "enum": [
-            "status_type"
-          ]
-        },
-        "classType": {
-          "description": "Classification of the resource",
-          "$ref": "#/definitions/SecurityClassification"
-        },
-        "clientCertRequired": {
-          "type": "boolean",
-          "example": false,
-          "description": "Indication on whether a client certificate required to access thie resource.  Could be a user certificate or computer certificate"
-        },
-        "contacts": {
-          "type": "string",
-          "description": "Name, e-mail and phone number of point of contact (String concatenated together)"
-        },
-        "createdBy": {
-          "type": "string",
-          "description": "Username of the individual submitting the resource"
-        },
-        "createdByJobId": {
-          "type": "string",
-          "description": "Provided by the system. If available, the Id of the Job that resulted in the creation of this resource."
-        },
-        "createdOn": {
-          "type": "string",
-          "description": "The date and time of data submission to Piazza"
-        },
-        "credentialsRequired": {
-          "type": "boolean",
-          "example": false,
-          "description": "Indication on whether credentials are required to access this resource"
-        },
-        "format": {
-          "type": "string",
-          "description": "In case of ComplexData, Format defines the allowed input representation"
-        },
-        "metadata": {
-          "type": "object",
-          "description": "A generic Map of String:String (key:value) pairs with additional metadata",
-          "additionalProperties": {
             "type": "string"
-          }
-        },
-        "networkAvailable": {
-          "type": "string",
-          "description": "A list of networks names where this resource is available"
-        },
-        "numericKeyValueList": {
-          "type": "array",
-          "description": "Allows for the optional specification of user-defined key-value pairs of numeric values",
-          "items": {
-            "$ref": "#/definitions/NumericKeyValue"
-          }
-        },
-        "preAuthRequired": {
-          "type": "boolean",
-          "example": false,
-          "description": "Indication on whether preauthorization is required before using the resource?  (e.g. do users need to sign a user agreement, etc.)"
-        },
-        "qos": {
-          "type": "string",
-          "description": "Quality level of the resource (Production, Development)"
-        },
-        "reason": {
-          "type": "string",
-          "description": "Human readable reason on the status of the resource"
-        },
-        "statusType": {
-          "type": "string",
-          "description": "Status of the resource",
-          "enum": [
-            "ONLINE",
-            "OFFLINE",
-            "DEGRADED",
-            "FAILED"
-          ]
-        },
-        "tags": {
-          "type": "string",
-          "description": "Keywords describing the resource"
-        },
-        "textKeyValueList": {
-          "type": "array",
-          "description": "Allows for the optional specification ofu ser-defined key-value pairs for string values",
-          "items": {
-            "$ref": "#/definitions/TextKeyValue"
-          }
-        },
-        "version": {
-          "type": "string",
-          "description": "The current version of the resource"
         }
-      }
     },
-    "Algorithm": {
-      "type": "object",
-      "required": [
-        "serviceId",
-        "url",
-        "name",
-        "version"
-      ],
-      "properties": {
-        "bands": {
-          "type": "array",
-          "description": "band description",
-          "items": {
-            "type": "string"
-          }
-        },
-        "description": {
-          "type": "string",
-          "description": "Human-readable description of the resource"
-        },
-        "interface": {
-          "type": "string",
-          "description": "interface description"
-        },
-        "max_cloud_cover": {
-          "type": "number",
-          "format": "integer",
-          "description": "max_cloud_cover description"
-        },
-        "name": {
-          "type": "string",
-          "description": "Human-readable description of the algorithm"
-        },
-        "service_id": {
-          "type": "string",
-          "description": "Provided by the System. The unique Id of the Service"
-        },
-        "url": {
-          "type": "string",
-          "description": "The URL to the user Service to be executed"
-        },
-        "version": {
-          "type": "string",
-          "description": "The current version of the resource"
-        }
-      }
-    },
-    "AlgorithmResults": {
-      "type": "object",
-      "required": [
-        "algorithms"
-      ],
-      "properties": {
-        "algorithms": {
-          "type": "array",
-          "description": "The array of Algorithm results",
-          "items": {
-            "$ref": "#/definitions/Algorithm"
-          }
-        }
-      }
-    },
-    "AlgorithmResult": {
-      "type": "object",
-      "required": [
-        "algorithm"
-      ],
-      "properties": {
-        "algorithm": {
-          "$ref": "#/definitions/Algorithm",
-          "description": "The Algorithm result"
-        }
-      }
-    },
-    "Scene": {},
-    "ProductLineResults": {
-      "type": "object",
-      "required": [
-        "product_lines"
-      ],
-      "properties": {
-        "product_lines": {
-          "type": "array",
-          "description": "The array of Product Line results",
-          "items": {
-            "$ref": "#/definitions/ProductLineType"
-          }
-        }
-      }
-    },
-    "ProductLineProperties": {
-      "type": "object",
-      "required": [
-        "name"
-      ],
-      "properties": {
-        "algorithm_name": {
-          "type": "string",
-          "description": "Human-readable name of the Algorithm"
-        },
-        "category": {
-          "type": "string",
-          "description": "The category"
-        },
-        "created_by": {
-          "type": "string",
-          "description": "The username of the user that created the Product Line"
-        },
-        "created_on": {
-          "type": "string",
-          "description": "The date and time this Product Line was created"
-        },
-        "max_cloud_cover": {
-          "type": "number",
-          "format": "integer",
-          "description": "Integer representing the maximum cloud cover"
-        },
-        "name": {
-          "type": "string",
-          "description": "Human-readable name of the Product Line"
-        },
-        "owned_by": {
-          "type": "string",
-          "description": "The owner of the Product Line"
-        },
-        "spatial_filter_id": {
-          "type": "string",
-          "description": "The unique Id of the Spatial Filter"
-        },
-        "start_on": {
-          "type": "string",
-          "description": "The date and time of when this Product Line started"
-        },
-        "stop_on": {
-          "type": "string",
-          "description": "The date and time of when this Product Line stopped"
-        },
-        "type": {
-          "type": "string",
-          "description": "Product Line type"
-        }
-      }
-    },
-    "Job": {
-      "type": "object",
-      "required": [
-        "id",
-        "properties",
-        "type",
-        "geometry"
-      ],
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "The owner of the Product Line"
-        },
-        "properties": {
-          "type": "object",
-          "description": "The unique Id of the Spatial Filter",
-          "$ref": "#/definitions/JobProperties"
-        },
-        "type": {
-          "type": "string",
-          "description": "The date and time of when this Product Line started"
-        },
-        "geometry": {
-          "type": "object",
-          "description": "The date and time of when this Product Line stopped",
-          "$ref": "#/definitions/Geometry"
-        }
-      }
-    },
-    "ProductLine": {
-      "type": "object",
-      "required": [
-        "id",
-        "properties",
-        "type",
-        "geometry"
-      ],
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "The owner of the Product Line"
-        },
-        "properties": {
-          "type": "object",
-          "description": "The unique Id of the Spatial Filter",
-          "$ref": "#/definitions/ProductLineProperties"
-        },
-        "type": {
-          "type": "string",
-          "description": "The date and time of when this Product Line started"
-        },
-        "geometry": {
-          "type": "object",
-          "description": "The date and time of when this Product Line stopped",
-          "$ref": "#/definitions/Geometry"
-        }
-      }
-    },
-    "Geometry": {
-      "type": "object",
-      "required": [
-        "coordinates",
-        "type"
-      ],
-      "properties": {
-        "coordinates": {
-          "type": "array",
-          "description": "The unique Id of the Spatial Filter",
-          "items": {
-            "type": "array",
-            "description": "test",
-            "items": {
-              "type": "number",
-              "format": "double"
+    "paths": {
+        "/": {
+            "get": {
+                "description": "Get basic system health",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A hash of UI-pertinent information",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseUIData"
+                        }
+                    }
+                },
+                "tags": [
+                    "System"
+                ]
             }
-          }
         },
-        "type": {
-          "type": "string",
-          "description": "The date and time of when this Product Line started"
+        "/login": {
+            "get": {
+                "description": "Start a new Beachfront user session",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/AuthUsernameAndPassword"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "New session token",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseSessionCreated"
+                        }
+                    }
+                },
+                "tags": [
+                    "UI"
+                ]
+            }
+        },
+        "/v0/user": {
+            "get": {
+                "description": "Returns information pertinent to the Beachfront UI",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A hash of UI-pertinent information",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseUIData"
+                        }
+                    },
+                    "400": {
+                        "description": "Missing `Authorization` header"
+                    },
+                    "401": {
+                        "description": "User session has expired"
+                    }
+                },
+                "tags": [
+                    "UI"
+                ]
+            }
+        },
+        "/v0/algorithm": {
+            "get": {
+                "description": "List all available algorithms",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of algorithms",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseListAlgorithms"
+                        }
+                    },
+                    "400": {
+                        "description": "Missing `Authorization` header"
+                    },
+                    "401": {
+                        "description": "User session has expired"
+                    }
+                },
+                "tags": [
+                    "Algorithm"
+                ]
+            }
+        },
+        "/v0/algorithm/{algorithm_id}": {
+            "get": {
+                "description": "Get specific algorithm",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "algorithm_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Single algorithm",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseGetAlgorithm"
+                        }
+                    },
+                    "400": {
+                        "description": "Missing `Authorization` header"
+                    },
+                    "401": {
+                        "description": "User session has expired"
+                    },
+                    "404": {
+                        "description": "Algorithm does not exist"
+                    }
+                },
+                "tags": [
+                    "Algorithm"
+                ]
+            }
+        },
+        "/v0/job": {
+            "get": {
+                "description": "List all jobs for authenticated user",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of jobs",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseListJobs"
+                        }
+                    },
+                    "400": {
+                        "description": "Missing `Authorization` header"
+                    },
+                    "401": {
+                        "description": "User session has expired"
+                    }
+                },
+                "tags": [
+                    "Job"
+                ]
+            },
+            "post": {
+                "description": "Create job",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Request Body",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/RequestCreateJob"
+                        }
+                    },
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "New job",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseGetJob"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid payload or missing `Authorization` header"
+                    },
+                    "401": {
+                        "description": "User session has expired"
+                    }
+                },
+                "tags": [
+                    "Job"
+                ]
+            }
+        },
+        "/v0/job/{job_id}": {
+            "get": {
+                "description": "List all jobs for authenticated user",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "job_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Single job",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseGetJob"
+                        }
+                    },
+                    "400": {
+                        "description": "Missing `Authorization` header"
+                    },
+                    "401": {
+                        "description": "User session has expired"
+                    },
+                    "404": {
+                        "description": "Job does not exist"
+                    }
+                },
+                "tags": [
+                    "Job"
+                ]
+            },
+            "delete": {
+                "description": "Remove a job from authenticated user's tracking list",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "job_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Job removed from tracking list",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Missing `Authorization` header"
+                    },
+                    "401": {
+                        "description": "User session has expired"
+                    },
+                    "404": {
+                        "description": "Job does not exist"
+                    }
+                },
+                "tags": [
+                    "Job"
+                ]
+            }
+        },
+        "/v0/job/{job_id}.geojson": {
+            "get": {
+                "description": "Download shoreline detections for job",
+                "produces": [
+                    "application/vnd.geo+json",
+                    "text/plain"
+                ],
+                "parameters": [
+                    {
+                        "name": "job_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "GeoJSON FeatureCollection"
+                    },
+                    "400": {
+                        "description": "Missing `Authorization` header"
+                    },
+                    "401": {
+                        "description": "User session has expired"
+                    },
+                    "404": {
+                        "description": "Job does not exist"
+                    }
+                },
+                "tags": [
+                    "Job"
+                ]
+            }
+        },
+        "/v0/job/by_scene/{scene_id}": {
+            "get": {
+                "description": "List all jobs which have processed a given scene",
+                "parameters": [
+                    {
+                        "name": "scene_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of jobs",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseListJobsBySceneID"
+                        }
+                    },
+                    "400": {
+                        "description": "Missing `Authorization` header"
+                    },
+                    "401": {
+                        "description": "User session has expired"
+                    }
+                },
+                "tags": [
+                    "Job"
+                ]
+            }
+        },
+        "/v0/job/by_productline/{productline_id}": {
+            "get": {
+                "description": "List all jobs which have been processed under a given product line",
+                "parameters": [
+                    {
+                        "name": "productline_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "since",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "description": "A date cutoff A valid ISO8601 timestamp (if blank, defaults to date of product line creation)"
+                    },
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of jobs",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseListJobsByProductLineID"
+                        }
+                    },
+                    "400": {
+                        "description": "Missing `Authorization` header"
+                    },
+                    "401": {
+                        "description": "User session has expired"
+                    }
+                },
+                "tags": [
+                    "Job"
+                ]
+            }
+        },
+        "/v0/productline": {
+            "get": {
+                "description": "List all product lines in the system",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of product lines",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseListProductLines"
+                        }
+                    },
+                    "400": {
+                        "description": "Missing `Authorization` header"
+                    },
+                    "401": {
+                        "description": "User session has expired"
+                    }
+                },
+                "tags": [
+                    "Product Line"
+                ]
+            },
+            "post": {
+                "description": "Create a new product line",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Request Body",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/RequestCreateProductLine"
+                        }
+                    },
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of product lines",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseListProductLines"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid payload or missing `Authorization` header"
+                    },
+                    "401": {
+                        "description": "User session has expired"
+                    }
+                },
+                "tags": [
+                    "Product Line"
+                ]
+            }
+        },
+        "/v0/productline/{productline_id}": {
+            "delete": {
+                "description": "Delete a productline",
+                "parameters": [
+                    {
+                        "name": "productline_id",
+                        "type": "string",
+                        "required": true,
+                        "in": "path"
+                    },
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product line deleted",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseListProductLines"
+                        }
+                    },
+                    "400": {
+                        "description": "Missing `Authorization` header"
+                    },
+                    "401": {
+                        "description": "User session has expired"
+                    }
+                },
+                "tags": [
+                    "Product Line"
+                ]
+            }
+        },
+        "/v0/scene/event/harvest": {
+            "post": {
+                "deprecated": true,
+                "description": "React to a \"scene harvested\" event from the legacy Beachfront image catalog",
+                "parameters": [
+                    {
+                        "name": "Request Body",
+                        "schema": {
+                            "properties": {
+                                "__signature__": {
+                                    "type": "string",
+                                    "description": "Authenticity signature for the event"
+                                },
+                                "scene_id": {
+                                    "type": "string",
+                                    "description": "ID of the scene that was just harvested"
+                                },
+                                "captured_on": {
+                                    "type": "string",
+                                    "description": "ISO8601 timestamp when the scene was captured by the sensor"
+                                },
+                                "cloud_cover": {
+                                    "type": "number",
+                                    "description": "The cloud cover value for the scene"
+                                },
+                                "min_x": {
+                                    "type": "number",
+                                    "description": "The minimum-x value of the scene's bounding box"
+                                },
+                                "min_y": {
+                                    "type": "number",
+                                    "description": "The minimum-y value of the scene's bounding box"
+                                },
+                                "max_x": {
+                                    "type": "number",
+                                    "description": "The maximum-x value of the scene's bounding box"
+                                },
+                                "max_y": {
+                                    "type": "number",
+                                    "description": "The maximum-y value of the scene's bounding box"
+                                }
+                            }
+                        },
+                        "required": true,
+                        "in": "body"
+                    },
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Scene event accepted or discarded",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseListProductLines"
+                        }
+                    },
+                    "400": {
+                        "description": "Inputs are malformed"
+                    },
+                    "401": {
+                        "description": "Event is untrusted"
+                    }
+                },
+                "tags": [
+                    "Product Line"
+                ]
+            }
         }
-      }
     },
-    "JobProperties": {
-      "type": "object",
-      "required": [
-        "scene_id",
-        "name"
-      ],
-      "properties": {
-        "algorithm_name": {
-          "type": "string",
-          "description": "Provided by the System. The unique Id of the Product Line"
+    "definitions": {
+        "Algorithm": {
+            "type": "object",
+            "description": "An algorithm capable of shoreline detection.\n",
+            "properties": {
+                "bands": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Short identifier for which spectral bands an algorithm requires."
+                    }
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Brief explanation of an algorithm written in analyst-friendly terminology."
+                },
+                "interface": {
+                    "type": "string",
+                    "description": "Identifier which determines the input parameters for an algorithm."
+                },
+                "max_cloud_cover": {
+                    "type": "integer",
+                    "description": "Cloud cover value above which an algorithm ceases to produce useful results."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Short analyst-friendly name for an algorithm."
+                },
+                "service_id": {
+                    "type": "string",
+                    "description": "Piazza Service ID for an algorithm."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "Execution URL for an algorithm."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "Current version of the algorithm."
+                }
+            }
         },
-        "algorithm_version": {
-          "type": "string",
-          "description": "Human-readable name of the Algorithm"
+        "Job": {
+            "type": "object",
+            "description": "A basic GeoJSON Feature representation of a Beachfront Job.\n",
+            "properties": {
+                "geometry": {
+                    "type": "object"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "Job ID"
+                },
+                "properties": {
+                    "type": "object",
+                    "properties": {
+                        "algorithm_name": {
+                            "type": "string",
+                            "description": "Name of the algorithm used to process this job"
+                        },
+                        "algorithm_version": {
+                            "type": "string",
+                            "description": "Version of the algorithm used to process this job",
+                            "example": "0.0"
+                        },
+                        "created_by": {
+                            "type": "string",
+                            "description": "Username of the person who initiated the job"
+                        },
+                        "created_on": {
+                            "type": "string",
+                            "description": "ISO8601 timestamp of when this job was created"
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "User-defined name for this job"
+                        },
+                        "scene_capture_date": {
+                            "type": "string",
+                            "description": "ISO8601 timestamp of when the scene processed by this job was captured"
+                        },
+                        "scene_id": {
+                            "type": "string",
+                            "description": "ID of the scene this job was processed against"
+                        },
+                        "status": {
+                            "type": "string",
+                            "description": "Status of this job"
+                        },
+                        "tide": {
+                            "type": "number",
+                            "description": "Predicted tide level for the centroid of this scene"
+                        },
+                        "tide_min_24h": {
+                            "type": "number",
+                            "description": "Prediction lower bound tide level for this centroid of this scene"
+                        },
+                        "tide_max_24h": {
+                            "type": "number",
+                            "description": "Prediction upper bound tide level for this centroid of this scene"
+                        }
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
         },
-        "geometry": {
-          "type": "string",
-          "description": "The bounding box geometry tuple"
+        "ProductLine": {
+            "type": "object",
+            "description": "A basic GeoJSON Feature representation of a Beachfront Product Line.\n",
+            "properties": {
+                "geometry": {
+                    "type": "object"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "Product Line ID"
+                },
+                "properties": {
+                    "type": "object",
+                    "properties": {
+                        "algorithm_name": {
+                            "type": "string",
+                            "description": "Name of the algorithm chosen for this product line"
+                        },
+                        "category": {
+                            "type": "string",
+                            "description": "User-definted category for this product line",
+                            "example": "0.0"
+                        },
+                        "created_by": {
+                            "type": "string",
+                            "description": "Username of the person who created the product line"
+                        },
+                        "created_on": {
+                            "type": "string",
+                            "description": "ISO8601 timestamp of when this product line was created"
+                        },
+                        "max_cloud_cover": {
+                            "type": "integer",
+                            "description": "Maximum cloud cover value for filtering input scenes for this product line"
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "User-defined name for this product line"
+                        },
+                        "spatial_filter_id": {
+                            "type": "string",
+                            "description": "ID of the spatial filter used to filter scenes"
+                        },
+                        "start_on": {
+                            "type": "string",
+                            "description": "ISO8601 timestamp of when this product line should begin"
+                        },
+                        "stop_on": {
+                            "type": "string",
+                            "description": "ISO8601 timestamp of when this product line should begin"
+                        }
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
         },
-        "created_by": {
-          "type": "string",
-          "description": "The username of the user that created the Product Line"
+        "RequestCreateJob": {
+            "type": "object",
+            "properties": {
+                "algorithm_id": {
+                    "type": "string",
+                    "description": "Service ID of the algorithm chosen for this product line"
+                },
+                "scene_id": {
+                    "type": "string",
+                    "description": "ID of the Scene to be processed"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "User-defined name to use for this job"
+                }
+            }
         },
-        "created_on": {
-          "type": "string",
-          "description": "The date and time this Product Line was created"
+        "RequestCreateProductLine": {
+            "type": "object",
+            "properties": {
+                "algorithm_id": {
+                    "type": "string",
+                    "description": "Service ID of the algorithm chosen for this product line"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "User-defined category for this product line"
+                },
+                "min_x": {
+                    "description": "minimum-x valueof bounding box for filtering input scenes for this product line",
+                    "type": "number",
+                    "format": "float"
+                },
+                "min_y": {
+                    "type": "number",
+                    "description": "Minimum-Y value of bounding box for filtering input scenes for this product line"
+                },
+                "max_x": {
+                    "type": "number",
+                    "description": "Maximum-X value of bounding box for filtering input scenes for this product line"
+                },
+                "max_y": {
+                    "type": "number",
+                    "description": "Maximum-Y value of bounding box for filtering input scenes for this product line"
+                },
+                "max_cloud_cover": {
+                    "type": "integer",
+                    "description": "Maximum cloud cover value for filtering input scenes for this product line"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "User-defined name for this product line"
+                },
+                "spatial_filter_id": {
+                    "type": "string",
+                    "description": "ID of the spatial filter for filtering input scenes for this product line (not currently used)"
+                },
+                "start_on": {
+                    "type": "string",
+                    "description": "ISO8601 timestamp specifying when this product line should activate"
+                },
+                "stop_on": {
+                    "type": "string",
+                    "description": "If not null, must be an ISO8601 timestamp specifying when this product line should deactivate"
+                }
+            }
         },
-        "scene_capture_date": {
-          "type": "number",
-          "format": "integer",
-          "description": "Integer representing the maximum cloud cover"
+        "ResponseGetAlgorithm": {
+            "type": "object",
+            "properties": {
+                "algorithm": {
+                    "$ref": "#/definitions/Algorithm"
+                }
+            }
         },
-        "scene_sensor_name": {
-          "type": "string",
-          "description": "sensor name"
+        "ResponseGetJob": {
+            "type": "object",
+            "properties": {
+                "job": {
+                    "$ref": "#/definitions/Job"
+                }
+            }
         },
-        "name": {
-          "type": "string",
-          "description": "Human-readable name of the Product Line"
+        "ResponseListAlgorithms": {
+            "type": "object",
+            "properties": {
+                "algorithms": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Algorithm"
+                    }
+                }
+            }
         },
-        "scene_id": {
-          "type": "string",
-          "description": "The owner of the Product Line"
+        "ResponseListJobs": {
+            "type": "object",
+            "properties": {
+                "jobs": {
+                    "type": "object",
+                    "description": "GeoJSON FeatureCollection",
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        },
+                        "features": {
+                            "$ref": "#/definitions/Job"
+                        }
+                    }
+                }
+            }
         },
-        "status": {
-          "type": "string",
-          "description": "The unique Id of the Spatial Filter"
+        "ResponseListJobsBySceneID": {
+            "type": "object",
+            "properties": {
+                "scene_id": {
+                    "type": "string"
+                },
+                "jobs": {
+                    "type": "object",
+                    "description": "GeoJSON FeatureCollection",
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        },
+                        "features": {
+                            "$ref": "#/definitions/Job"
+                        }
+                    }
+                }
+            }
         },
-        "tide": {
-          "type": "string",
-          "description": "The date and time of when this Product Line started"
+        "ResponseListJobsByProductLineID": {
+            "type": "object",
+            "properties": {
+                "productline_id": {
+                    "type": "string"
+                },
+                "since": {
+                    "type": "string",
+                    "description": "ISO8601 timestamp of the earliest execution date desired"
+                },
+                "jobs": {
+                    "type": "object",
+                    "description": "GeoJSON FeatureCollection",
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        },
+                        "features": {
+                            "$ref": "#/definitions/Job"
+                        }
+                    }
+                }
+            }
         },
-        "tide_min_24h": {
-          "type": "string",
-          "description": "The date and time of when this Product Line stopped"
+        "ResponseListProductLines": {
+            "type": "object",
+            "properties": {
+                "productlines": {
+                    "type": "object",
+                    "description": "GeoJSON FeatureCollection",
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        },
+                        "features": {
+                            "$ref": "#/definitions/ProductLine"
+                        }
+                    }
+                }
+            }
         },
-        "tide_max_24h": {
-          "type": "string",
-          "description": "max tide"
+        "ResponseSessionCreated": {
+            "type": "object",
+            "properties": {
+                "api_key": {
+                    "type": "string"
+                }
+            }
+        },
+        "ResponseUIData": {
+            "type": "object",
+            "properties": {
+                "profile": {
+                    "type": "object",
+                    "properties": {
+                        "username": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "services": {
+                    "type": "object",
+                    "properties": {
+                        "catalog": {
+                            "type": "string",
+                            "description": "Base URL for the Beachfront image catalog."
+                        },
+                        "wms_server": {
+                            "type": "string",
+                            "description": "Base URL for the Beachfront WMS server."
+                        }
+                    }
+                }
+            }
         }
-      }
-    },
-    "JobResults": {
-      "type": "object",
-      "required": [
-        "jobs"
-      ],
-      "properties": {
-        "jobs": {
-          "type": "object",
-          "description": "The array of Job results",
-          "$ref": "#/definitions/JobType"
-        }
-      }
-    },
-    "JobType": {
-      "type": "object",
-      "required": [
-        "features",
-        "type"
-      ],
-      "properties": {
-        "features": {
-          "type": "array",
-          "description": "The array of Job results",
-          "items": {
-            "$ref": "#/definitions/Job"
-          }
-        },
-        "type": {
-          "type": "string",
-          "description": "Job Type"
-        }
-      }
-    },
-    "ProductLineType": {
-      "type": "object",
-      "required": [
-        "features",
-        "type"
-      ],
-      "properties": {
-        "features": {
-          "type": "array",
-          "description": "The array of Product Line results",
-          "items": {
-            "$ref": "#/definitions/ProductLine"
-          }
-        },
-        "type": {
-          "type": "string",
-          "description": "Product Line Type"
-        }
-      }
-    },
-    "CreateJob": {
-      "type": "object",
-      "required": [
-        "apiKey",
-        "userId",
-        "sceneId",
-        "serviceId",
-        "jobName"
-      ],
-      "properties": {
-        "apiKey": {
-          "type": "string",
-          "description": ""
-        },
-        "userId": {
-          "type": "string",
-          "description": ""
-        },
-        "sceneId": {
-          "type": "string",
-          "description": ""
-        },
-        "serviceId": {
-          "type": "string",
-          "description": ""
-        },
-        "jobName": {
-          "type": "string",
-          "description": ""
-        }
-      }
     }
-  }
 }
