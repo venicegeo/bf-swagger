@@ -8,7 +8,7 @@ node ('sl61') {
         stage 'Fortify Scan'
         sh 'echo Fortify scan begin...'
         sh "/opt/hp_fortify_sca/bin/sourceanalyzer -b ${env.BUILD_NUMBER} '**/*.js' -exclude 'test/*.js' -exclude package.json -exclude 'node_modules/**/*.js'"
-        sh "/opt/hp_fortify_sca/bin/sourceanalyzer -b ${env.BUILD_NUMBER}  -scan -Xmx1G -f fortifyResults-${env.BUILD_NUMBER}.fpr"
+        sh "/opt/hp_fortify_sca/bin/sourceanalyzer -b ${env.BUILD_NUMBER}  -scan -Xmx8G -f fortifyResults-${env.BUILD_NUMBER}.fpr"
         sh "/bin/curl -v --insecure -H 'Accept: application/json' -X POST --form file=@fortifyResults-${env.BUILD_NUMBER}.fpr https://threadfix.devops.geointservices.io/rest/applications/68/upload?apiKey=$THREADFIXKEY"
         // **OWASP**
         stage 'OWASP Check'
