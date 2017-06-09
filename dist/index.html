@@ -31,6 +31,19 @@
 
   <script type="text/javascript">
     $(function () {
+		var mainurl = window.location.href.match(/.*\.io/i)[0]
+		var suburl = window.location.href.match(/(\#.*)/gi);
+		var rsrc;
+		var subrsrc;
+		if (suburl){
+			suburl = suburl[0].split("/");
+			if(suburl[1])
+				rsrc = suburl[1]
+			if(suburl[2]
+				subrsrc = suburl[2]
+		}
+		var url = mainurl + '/swagger-beachfront.json';
+		/*
       var url = window.location.search.match(/url=([^&]+)/);
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
@@ -41,7 +54,7 @@
 		url = window.location.href + '/swagger-beachfront.json';
 		}
       }
-
+		*/
       // Pre load translate...
       if(window.SwaggerTranslator) {
         window.SwaggerTranslator.translate();
@@ -74,7 +87,30 @@
           addApiKeyAuthorization();
           window.swaggerUi.api.setHost( window.location.hostname.replace("swagger","gateway") );
           window.swaggerUi.api.clientAuthorizations.add("api_key", new SwaggerClient.ApiKeyAuthorization("Authorization", "Basic MTMzOTU5OTQtMzg1OC00MzE1LThiYzEtMjkyN2RmZTRkNDgzOnRlc3Q0bGlmZQ==", "header"));
-        },
+        
+			if(rsrc && subrsrc){
+				$('li#resource_' + rsrc + ' ul.endpoints').slideDown();
+				$('div#' + rsrc + '_' + subrsrc + '_content').slideDown();
+				try{
+					$.bbq.pushState('#/' + rsrc + '/' + subrsrc, 2)
+					document.getElementById(rsrc + '_' + subrsrc).scrollIntoView();
+				}
+				catch(e){
+					$.bbq.pushState('#/', 2);
+				}
+			}
+			else if(rsrc){
+				$('li#resource_' + rsrc + ' ul.endpoints').slideDown();
+				try{
+					$.bbq.pushState('#/' + rsrc, 2)
+					document.getElementById('resource_' rsrc).scrollIntoView();
+				}
+				catch(e){
+					$.bbq.pushState('#/', 2);
+				}
+			}			
+		
+		},
         onFailure: function(data) {
           log("Unable to Load SwaggerUI");
         },
