@@ -37,7 +37,7 @@ node {
     if (getDependencyStatus == 0) {
       echo "Artifact version ${appvers} exists in Nexus, nothing to do"
     } else {
-     sh """mvn -X --settings ~/.m2/settings.xml deploy:deploy-file -Dfile=${root}/${appBaseName}.tar.gz \
+     sh """mvn -X --settings ~/.m2/settings.xml deploy:deploy-file -Dfile=${root}/${appBaseName}.zip \
         -DrepositoryId=nexus \
         -Durl="${env.ARTIFACT_STORAGE_DEPLOY_URL}" \
         -DgroupId="org.venice.beachfront" \
