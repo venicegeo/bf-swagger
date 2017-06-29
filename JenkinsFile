@@ -17,7 +17,8 @@ node {
 
   def appvers = sh(script: "git describe --long --tags --always | sed 's/\\./-/'g", returnStdout: true)
   appvers = appvers.trim()
-  def appName = "bf-tideprediction-${appvers}"
+  def appBaseName = "bf-swagger"
+  def appName = "${appBaseName}-${appvers}"
 
   stage('Archive') {
     // Build
@@ -26,7 +27,7 @@ node {
     def getDependencyStatus = sh(script: """mvn -X --settings ~/.m2/settings.xml dependency:get \
       -Dmaven.repo.local="${root}/.m2/repository" \
       -DrepositoryId=nexus \
-      -DartifactId=bf-tideprediction \
+      -DartifactId=${appBaseName} \
       -Dversion=${appvers} \
       -DgroupId="org.venice.beachfront" \
       -Dpackaging=zip \
@@ -36,14 +37,14 @@ node {
     if (getDependencyStatus == 0) {
       echo "Artifact version ${appvers} exists in Nexus, nothing to do"
     } else {
-     sh """mvn -X --settings ~/.m2/settings.xml deploy:deploy-file -Dfile=${root}/bf-tideprediction.zip \
+     sh """mvn -X --settings ~/.m2/settings.xml deploy:deploy-file -Dfile=${root}/${appBaseName}.zip \
         -DrepositoryId=nexus \
         -Durl="${env.ARTIFACT_STORAGE_DEPLOY_URL}" \
         -DgroupId="org.venice.beachfront" \
         -DgeneratePom=false \
         -Dpackaging=zip \
         -Dmaven.repo.local="${root}/.m2/repository" \
-        -DartifactId=bf-tideprediction \
+        -DartifactId=${appBaseName} \
         -Dversion=${appvers}
       """
     }
@@ -53,7 +54,7 @@ node {
     withCredentials([[$class: "StringBinding", credentialsId: "${env.THREADFIX_API_KEY}", variable: "THREADFIX_KEY"]]) {
       // Dependency Checker
       sh "/jslave/dependency-check/dependency-check/bin/dependency-check.sh --version"
-      sh '/jslave/dependency-check/dependency-check/bin/dependency-check.sh --project "bf-tideprediction" --scan "." --format "XML" --enableExperimental --disableBundleAudit'
+      sh '/jslave/dependency-check/dependency-check/bin/dependency-check.sh --project "${appBaseName}" --scan "." --format "XML" --enableExperimental --disableBundleAudit'
       sh "/bin/curl -v --insecure -H 'Accept: application/json' -X POST --form file=@dependency-check-report.xml ${env.THREADFIX_URL}/rest/applications/${env.THREADFIX_ID}/upload?apiKey=${THREADFIX_KEY}"
       // Fortify
       sh "/opt/hp_fortify_sca/bin/sourceanalyzer -b ${env.BUILD_NUMBER} ./{*.py,**/*.py}"
@@ -65,7 +66,7 @@ node {
     /*
     withCredentials([string(credentialsId: "${env.SONAR_TOKEN}", variable: 'USERNAME')]) {
       withEnv(["HOME=${root}"]) {
-        def projectId = "venicegeo:beachfront:bf-tideprediction"
+        def projectId = "venicegeo:beachfront:${appBaseName}"
         sh "${mvn}/bin/mvn sonar:sonar -Dmaven.repo.local=${root} -Dsonar.host.url=${env.SONAR_URL} -Dsonar.projectKey=${projectId} -Dsonar.projectName=${projectId} -Dsonar.login=${USERNAME}"// -P nga"
       }
     }*/
@@ -115,8 +116,8 @@ node {
         sh "cf api ${env.PCF_API_ENDPOINT}"
         sh "cf auth ${CFUSER} ${CFPASS}"
         sh "cf target -o ${env.PCF_ORG} -s ${env.PHASE_ONE_PCF_SPACE}"
-        def legacyAppNames = sh(script: "cf routes | grep \"bf-tideprediction \" | awk '{print \$4}'", returnStdout: true)
-        sh "cf map-route ${appName} ${env.PHASE_ONE_PCF_DOMAIN} --hostname bf-tideprediction"
+        def legacyAppNames = sh(script: "cf routes | grep \"${appBaseName} \" | awk '{print \$4}'", returnStdout: true)
+        sh "cf map-route ${appName} ${env.PHASE_ONE_PCF_DOMAIN} --hostname ${appBaseName}"
         // Remove Legacy applications
         for (Object legacyApp : legacyAppNames.trim().tokenize(',')) {
           def legacyAppName = legacyApp.toString().trim()
@@ -181,8 +182,8 @@ node {
           sh "cf api ${env.PCF_API_ENDPOINT}"
           sh "cf auth ${CFUSER} ${CFPASS}"
           sh "cf target -o ${env.PCF_ORG} -s ${env.PHASE_TWO_PCF_SPACE}"
-          def legacyAppNames = sh(script: "cf routes | grep \"bf-tideprediction \" | awk '{print \$4}'", returnStdout: true)
-          sh "cf map-route ${appName} ${env.PHASE_TWO_PCF_DOMAIN} --hostname bf-tideprediction"
+          def legacyAppNames = sh(script: "cf routes | grep \"${appBaseName} \" | awk '{print \$4}'", returnStdout: true)
+          sh "cf map-route ${appName} ${env.PHASE_TWO_PCF_DOMAIN} --hostname ${appBaseName}"
           // Remove Legacy applications
           for (Object legacyApp : legacyAppNames.trim().tokenize(',')) {
             def legacyAppName = legacyApp.toString().trim()
