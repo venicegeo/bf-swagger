@@ -136,28 +136,6 @@ node {
     }
   }
 
-  if (!params.SKIP_INTEGRATION_TESTS) {
-    stage('Phase One Integration Tests') {
-      if(!fileExists("integration-tests")) {
-        sh "mkdir -p integration-tests"
-      }
-      // Clone Test Repository
-      withCredentials([file(credentialsId: "${POSTMAN_SECRET_FILE}", variable: 'POSTMAN_FILE')]) {
-        withEnv(["PATH+=${root}/integration-tests/node_modules/newman/bin:${nodejs}/bin", "PCF_SPACE=${env.PHASE_ONE_PCF_SPACE}", "HOME=${WORKSPACE}"]) {
-          dir ("integration-tests") {
-            if(env.GITLAB_CREDS) {
-              git url: "${env.INTEGRATION_GIT_URL}", branch: "${env.INTEGRATION_GIT_BRANCH}", credentialsId: "${env.GITLAB_CREDS}"
-            } else {
-              git url: "${env.INTEGRATION_GIT_URL}", branch: "${env.INTEGRATION_GIT_BRANCH}"
-            }
-            sh "npm install newman@2"
-            sh "/bin/bash ci/beachfront.sh"
-          }
-        }
-      }
-    }
-  }
-
   if(params.DEPLOY_PHASE_TWO) {
     stage ('Stage Deploy') {
       if(!fileExists('.cf')) {
@@ -201,28 +179,5 @@ node {
         }
       }
     }
-
-    if (!params.SKIP_INTEGRATION_TESTS) {
-      stage('Phase Two Integration Tests') {
-        if(!fileExists("integration-tests")) {
-          sh "mkdir -p integration-tests"
-        }
-        // Clone Test Repository
-        withCredentials([file(credentialsId: "${POSTMAN_SECRET_FILE}", variable: 'POSTMAN_FILE')]) {
-          withEnv(["PATH+=${root}/integration-tests/node_modules/newman/bin:${nodejs}/bin", "PCF_SPACE=${env.PHASE_TWO_PCF_SPACE}", "HOME=${WORKSPACE}"]) {
-            dir ("integration-tests") {
-              if(env.GITLAB_CREDS) {
-                git url: "${env.INTEGRATION_GIT_URL}", branch: "${env.INTEGRATION_GIT_BRANCH}", credentialsId: "${env.GITLAB_CREDS}"
-              } else {
-                git url: "${env.INTEGRATION_GIT_URL}", branch: "${env.INTEGRATION_GIT_BRANCH}"
-              }
-              sh "npm install newman@2"
-              sh "/bin/bash ci/beachfront.sh"
-            }
-          }
-        }
-      }
-    }
   }
-
 }
