@@ -8,4 +8,4 @@ source $root/ci/vars.sh
 
 cp nginx.conf dist
 
-zip $APP.$EXT $root dist
+tar cfz $APP.$EXT -C $root dist
