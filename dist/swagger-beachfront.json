@@ -318,7 +318,7 @@
         },
         "/v0/job/{job_id}.geojson": {
             "get": {
-                "description": "Download shoreline detections for job",
+                "description": "Download shoreline detections for job as GeoJSON",
                 "produces": [
                     "application/vnd.geo+json",
                     "text/plain"
@@ -337,6 +337,43 @@
                 "responses": {
                     "200": {
                         "description": "GeoJSON FeatureCollection"
+                    },
+                    "400": {
+                        "description": "Missing `Authorization` header"
+                    },
+                    "401": {
+                        "description": "User session has expired"
+                    },
+                    "404": {
+                        "description": "Job does not exist"
+                    }
+                },
+                "tags": [
+                    "Job"
+                ]
+            }
+        },
+        "/v0/job/{job_id}.gpkg": {
+            "get": {
+                "description": "Download shoreline detections for job as GeoPackage",
+                "produces": [
+                    "application/x-sqlite3",
+                    "text/plain"
+                ],
+                "parameters": [
+                    {
+                        "name": "job_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/AuthAPIKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "GeoPackage archive (sqlite 3 database)"
                     },
                     "400": {
                         "description": "Missing `Authorization` header"
