@@ -56,7 +56,7 @@ node {
         sh "cf auth ${CFUSER} ${CFPASS}"
         sh "cf target -o ${env.PCF_ORG} -s ${pcfSpace}"
         def legacyAppNames = sh(script: "cf routes | grep \"${appName} \" | awk '{print \$4}'", returnStdout: true)
-        sh "cf map-route ${deployAppName} ${env.PHASE_ONE_PCF_DOMAIN} --hostname ${appName}"
+        sh "cf map-route ${deployAppName} ${pcfDomain} --hostname ${appName}"
         // Remove Legacy applications
         for (Object legacyApp : legacyAppNames.trim().tokenize(',')) {
           def legacyAppName = legacyApp.toString().trim()
