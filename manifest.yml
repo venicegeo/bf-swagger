@@ -1,4 +1,0 @@
-applications:
-- name: pz-swagger-${GIT_REVISION}
-  host: pz-swagger-${GIT_REVISION}
-  buildpack: staticfile_buildpack
