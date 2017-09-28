@@ -84,7 +84,7 @@ node {
 
   stage('Archive') {
     // Build
-    sh "tar cfz ${appName}.tar.gz -C ${root} ${root}/dist"
+    sh "tar cfz ${appName}.tar.gz -C ${root} ${root}/static"
     // Check if exists already
     def getDependencyStatus = sh(script: """mvn -X --settings ~/.m2/settings.xml dependency:get \
       -Dmaven.repo.local="${root}/.m2/repository" \

@@ -20,7 +20,7 @@ at which it is present.
 ## Development
 
 Swagger sources the configuration for the displayed page from the
-[swagger-beachfront.json](dist/swagger-beachfront.json) file. This is
+[swagger-beachfront.json](static/swagger-beachfront.json) file. This is
 a Swagger OpenAPI 2.0 configuration file, using the syntax documented
 [here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).
 
