@@ -61,7 +61,7 @@ node {
         for (Object legacyApp : legacyAppNames.trim().tokenize(',')) {
           def legacyAppName = legacyApp.toString().trim()
           if (legacyAppName != appName) {
-            sh "cf unmap-route ${legacyAppName} ${pcfDomain} --hostname ${legacyAppName}"
+            sh "cf unmap-route ${legacyAppName} ${pcfDomain} --hostname ${appName}"
             sh "cf delete -f ${legacyAppName}"
           }
         }
