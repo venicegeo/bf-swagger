@@ -90,14 +90,14 @@ node {
       -Dmaven.repo.local="${root}/.m2/repository" \
       -DrepositoryId=nexus \
       -DartifactId=${appName} \
-      -Dversion=${appvers} \
+      -Dversion=${appVersion} \
       -DgroupId="org.venice.beachfront" \
       -Dpackaging=tar.gz \
       -DremoteRepositories="nexus::default::${env.ARTIFACT_STORAGE_DEPLOY_URL}" \
     """, returnStatus: true)
     echo "dependency status = ${getDependencyStatus}"
     if (getDependencyStatus == 0) {
-      echo "Artifact version ${appvers} exists in Nexus, nothing to do"
+      echo "Artifact version ${appVersion} exists in Nexus, nothing to do"
     } else {
      sh """mvn -X --settings ~/.m2/settings.xml deploy:deploy-file -Dfile=${root}/${appName}.tar.gz \
         -DrepositoryId=nexus \
@@ -107,7 +107,7 @@ node {
         -Dpackaging=tar.gz \
         -Dmaven.repo.local="${root}/.m2/repository" \
         -DartifactId=${appName} \
-        -Dversion=${appvers}
+        -Dversion=${appVersion}
       """
     }
   }
