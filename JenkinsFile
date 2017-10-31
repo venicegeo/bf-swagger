@@ -81,6 +81,8 @@ node {
     appVersion = sh(script: """git describe --long --tags --always | sed 's/\\./-/'g""", returnStdout: true)
     appVersion = appVersion.trim()
     fullAppName = "${appName}-${appVersion}"
+    sh "ls -al"
+    sh "cat JenkinsFile"
   }
 
 
