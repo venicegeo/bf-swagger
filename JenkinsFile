@@ -34,7 +34,8 @@ node {
           sh "cf start ${deployAppName}"
         } catch (Exception e) {
           printLogsFailsafe deployAppName
-          sh "cf delete ${deployAppName} -f"
+          //sh "cf delete ${deployAppName} -f"
+          sh "echo ${deployAppName}"
           error("Error during application start. Deleting ${deployAppName} and failing the build.")
         }
       }
@@ -60,9 +61,10 @@ node {
         // Remove Legacy applications
         for (Object legacyApp : legacyAppNames.trim().tokenize(',')) {
           def legacyAppName = legacyApp.toString().trim()
+          sh "echo ${legacyAppName}"
           if (legacyAppName != appName) {
             sh "cf unmap-route ${legacyAppName} ${pcfDomain} --hostname ${appName}"
-            sh "cf delete -f ${legacyAppName}"
+            //sh "cf delete -f ${legacyAppName}"
           }
         }
       }
