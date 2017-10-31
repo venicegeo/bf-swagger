@@ -62,8 +62,9 @@ node {
         for (Object legacyApp : legacyAppNames.trim().tokenize(',')) {
           def legacyAppName = legacyApp.toString().trim()
           sh "echo ${legacyAppName}"
+          sh "echo ${appName}"
           if (legacyAppName != appName) {
-            sh "cf unmap-route ${legacyAppName} ${pcfDomain} --hostname ${appName}"
+            //sh "cf unmap-route ${legacyAppName} ${pcfDomain} --hostname ${appName}"
             //sh "cf delete -f ${legacyAppName}"
           }
         }
@@ -81,8 +82,6 @@ node {
     appVersion = sh(script: """git describe --long --tags --always | sed 's/\\./-/'g""", returnStdout: true)
     appVersion = appVersion.trim()
     fullAppName = "${appName}-${appVersion}"
-    sh "ls -al"
-    sh "cat JenkinsFile"
   }
 
 
