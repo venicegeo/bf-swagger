@@ -60,7 +60,7 @@ node {
         // Remove Legacy applications
         for (Object legacyApp : legacyAppNames.trim().tokenize(',')) {
           def legacyAppName = legacyApp.toString().trim()
-          if (legacyAppName != appName) {
+          if (legacyAppName != deployAppName) {
             sh "cf unmap-route ${legacyAppName} ${pcfDomain} --hostname ${appName}"
             sh "cf delete -f ${legacyAppName}"
           }
